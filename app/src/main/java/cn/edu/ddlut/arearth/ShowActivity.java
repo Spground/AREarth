@@ -96,7 +96,7 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
                     if(gtmp > 180)//180~360
                         info.yaw = gtmp - 360;
                     else if(gtmp < -180)//-360~-180
-                        info.yaw = -gtmp + 360;
+                        info.yaw = gtmp + 360;
                     else
                         info.yaw = gtmp;
 
@@ -130,7 +130,7 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
             //连接失败
             if(msg.what == 0x005) {
                 Utile.t(ShowActivity.this, "连接失败");
-                //ShowActivity.this.finish();
+                ShowActivity.this.finish();
             }
         }
     };
@@ -162,8 +162,9 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
         //清楚全屏标志
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        mVideoView.setVideoPath("http://192.168.1.119/test.mp4");
-        mVideoView.start();
+        //mVideoView.setVideoPath("http://192.168.1.119/test.mp4");
+        //mVideoView.start();
+
         Log.v("===", "onCreate ShowActivity");
 
         Intent intent = getIntent();
@@ -242,7 +243,7 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
 
     public void GL2CityName(double g, double l) {
         //先纬度值后经度值
-        Map paramsMap = new LinkedHashMap<>();
+        Map<String, String> paramsMap = new LinkedHashMap<>();
         paramsMap.put("location", l + "," + g);
         paramsMap.put("output", "json");
         paramsMap.put("ak", Utile.AK);
@@ -276,8 +277,11 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
                         show.setText("");
                         show.setText(String.format("国家:%s\n城市:%s", country, city));
 
+                        //根据国家代码播放对应的视频
                         mVideoView.stopPlayback();
                         mVideoView.setVideoPath("http://192.168.1.119/test.mp4");
+                        mVideoView.start();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
