@@ -142,7 +142,7 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
         btnAdjust.setEnabled(false);
-
+        mMediaController.setTitle("test video");
         mVideoView.setMediaController(mMediaController);
         mVideoView.setVideoViewCallback(this);
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -161,9 +161,6 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
         mVideoView.setFullscreen(true, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //清楚全屏标志
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        //mVideoView.setVideoPath("http://192.168.1.119/test.mp4");
-        //mVideoView.start();
 
         Log.v("===", "onCreate ShowActivity");
 
@@ -278,8 +275,9 @@ public class ShowActivity extends AppCompatActivity implements UniversalVideoVie
                         show.setText(String.format("国家:%s\n城市:%s", country, city));
 
                         //根据国家代码播放对应的视频
-                        mVideoView.stopPlayback();
-                        mVideoView.setVideoPath("http://192.168.1.119/test.mp4");
+                        mMediaController.showLoading();
+                        mVideoView.invalidate();
+                        mVideoView.setVideoPath("http://139.196.15.193:8001/i-am-china.mp4");
                         mVideoView.start();
 
                     } catch (JSONException e) {
